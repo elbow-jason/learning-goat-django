@@ -2,16 +2,26 @@ from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 
 import unittest
+import os
 
 
 class NewVisitorTest(unittest.TestCase):
 
     def setUp(self):  #
-        self.browser = webdriver.Firefox()
+        self.use_firefox()
+        #self.use_chrome()
         self.browser.implicitly_wait(3)
 
     def tearDown(self):  #
         self.browser.quit()
+
+    def use_firefox(self):
+        self.browser = webdriver.Firefox()
+
+    def use_chrome(self):
+        chromedriver = "/home/jason/apps/chromewebdriver/chromedriver"
+        os.environ["webdriver.chrome.driver"] = chromedriver
+        self.browser = webdriver.Chrome(executable_path=chromedriver)
 
     def test_can_start_a_list_and_retrieve_it_later(self):  #
         """
@@ -43,7 +53,7 @@ class NewVisitorTest(unittest.TestCase):
         #[2]
         inputbox = self.browser.find_element_by_id('id_new_item')
         self.assertEqual(inputbox.get_attribute('placeholder'),
-                         'Enter t to-do item'
+                         'Enter a to-do item'
                          )
 
         #[3]
@@ -54,7 +64,8 @@ class NewVisitorTest(unittest.TestCase):
         table = self.browser.find_element_by_id('id_list_table')
         rows = table.find_elements_by_tag_name('tr')
         self.assertTrue(
-            any(row.text == '1: Buy peacock feathers' for row in rows)
+            any(row.text == '1: Buy peacock feathers' for row in rows),
+            "New to-do item did not appear in table"
         )
 
         #[5]

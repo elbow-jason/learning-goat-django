@@ -9,7 +9,7 @@ class NewVisitorTest(unittest.TestCase):
 
     def setUp(self):  #
         self.use_firefox()
-        #self.use_chrome()
+        #self.use_chrome()  #use firefox. Better error messages.
         self.browser.implicitly_wait(3)
 
     def tearDown(self):  #
@@ -61,6 +61,7 @@ class NewVisitorTest(unittest.TestCase):
 
         #[4]
         inputbox.send_keys(Keys.ENTER)
+
         table = self.browser.find_element_by_id('id_list_table')
         rows = table.find_elements_by_tag_name('tr')
         self.assertTrue(

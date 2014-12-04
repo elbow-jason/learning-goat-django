@@ -2,14 +2,17 @@ from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 
 import unittest
-import os
+
+JASONS_CHROMEDRIVER_PATH = "/home/jason/apps/chromewebdriver/chromedriver"
+#import os
+# os.environ["webdriver.chrome.driver"] = JASONS_CHROMEDRIVER_PATH
 
 
 class NewVisitorTest(unittest.TestCase):
 
     def setUp(self):  #
-        self.use_firefox()
-        #self.use_chrome()  #use firefox. Better error messages.
+        #self.use_firefox()
+        self.use_chrome()  # use firefox. Better error messages.
         self.browser.implicitly_wait(3)
 
     def tearDown(self):  #
@@ -19,9 +22,9 @@ class NewVisitorTest(unittest.TestCase):
         self.browser = webdriver.Firefox()
 
     def use_chrome(self):
-        chromedriver = "/home/jason/apps/chromewebdriver/chromedriver"
-        os.environ["webdriver.chrome.driver"] = chromedriver
-        self.browser = webdriver.Chrome(executable_path=chromedriver)
+        self.browser = webdriver.Chrome(
+            executable_path=JASONS_CHROMEDRIVER_PATH
+        )
 
     def check_for_row_in_list_table(self, row_text):
         table = self.browser.find_element_by_id('id_list_table')
@@ -71,7 +74,6 @@ class NewVisitorTest(unittest.TestCase):
         inputbox.send_keys(Keys.ENTER)
 
         #[4]
-
         self.check_for_row_in_list_table(
             '1: Buy peacock feathers'
         )
@@ -81,7 +83,6 @@ class NewVisitorTest(unittest.TestCase):
         )
 
         #[5]
-
         self.fail("Finish the test!")  #
 
 if __name__ == '__main__':

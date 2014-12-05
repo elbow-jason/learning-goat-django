@@ -11,8 +11,8 @@ JASONS_CHROMEDRIVER_PATH = "/home/jason/apps/chromewebdriver/chromedriver"
 class NewVisitorTest(LiveServerTestCase):
 
     def setUp(self):  #
-        #self.use_firefox()
-        self.use_chrome()  # use firefox. Better error messages.
+        self.use_firefox()
+        #self.use_chrome()  # use firefox. Better error messages.
         self.browser.implicitly_wait(3)
 
     def tearDown(self):  #

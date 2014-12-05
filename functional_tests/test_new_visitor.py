@@ -1,14 +1,14 @@
+from django.test import LiveServerTestCase
+
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
-
 import unittest
 
+
 JASONS_CHROMEDRIVER_PATH = "/home/jason/apps/chromewebdriver/chromedriver"
-#import os
-# os.environ["webdriver.chrome.driver"] = JASONS_CHROMEDRIVER_PATH
 
 
-class NewVisitorTest(unittest.TestCase):
+class NewVisitorTest(LiveServerTestCase):
 
     def setUp(self):  #
         #self.use_firefox()
@@ -52,7 +52,8 @@ class NewVisitorTest(unittest.TestCase):
         """
 
         #[0]
-        self.browser.get('http://localhost:8000')
+        #self.browser.get('http://localhost:8000')
+        self.browser.get(self.live_server_url)
 
         #[1]
         self.assertIn('To-Do', self.browser.title)

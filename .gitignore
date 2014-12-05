@@ -1,6 +1,7 @@
-db.sqlite3
+*.sqlite3
 __pycache__
 *.pyc
 
 __pycache__/
 *.cpython*
+db.*

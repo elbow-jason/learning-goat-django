@@ -104,7 +104,7 @@ class NewVisitorTest(LiveServerTestCase):
         self.assertIn('Buy milk', page_text)
 
         # then everyone, having listed their individual
-        # to-do items.. goes to bed.
+        # to-do items.. goes to bed..
         self.fail("Finish the test!")  #
 
 if __name__ == '__main__':

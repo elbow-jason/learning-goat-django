@@ -66,9 +66,9 @@ class NewVisitorTest(LiveServerTestCase):
         edith_list_url = self.browser.current_url
         self.assertRegexpMatches(edith_list_url, '/lists/.+')
 
-        #inputbox = self.browser.find_element_by_id('id_new_item')
-        #inputbox.send_keys('Use peacock feathers to make a fly')
-        #inputbox.send_keys(Keys.ENTER)
+        inputbox = self.browser.find_element_by_id('id_new_item')
+        inputbox.send_keys('Use peacock feathers to make a fly')
+        inputbox.send_keys(Keys.ENTER)
         self.check_for_row_in_list_table(
             '1: Buy peacock feathers'
         )

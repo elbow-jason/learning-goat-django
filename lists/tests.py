@@ -12,11 +12,20 @@ url = '/lists/the-only-list-in-the-world/'
 
 class ListViewTest(TestCase):
 
-    def test_home_page_displays_all_list_items(self):
+    def test_make_sure_list_template_exists(self):
+        # getting a AssertionError: No templates used to render the response
+        # from line:
+        #       self.assertTemplateUsed(response, 'templates/list.html')
+        # of test_uses_list_templates
+
+        with open('./lists/templates/list.html') as f:
+            list_html = f.read()
+        self.assertIn('<html>', list_html)
+
+    def test_displays_all_list_items(self):
         Item.objects.create(text="itemy 1")
         Item.objects.create(text="itemy 2")
 
-        #request = HttpRequest()
         response = self.client.get(url)
 
         self.assertContains(response, "itemy 1")
@@ -85,13 +94,3 @@ class HomePageTest(TestCase):
         req = HttpRequest()
         home_page(req)
         self.assertEqual(Item.objects.count(), 0)
-
-    def test_home_page_displays_all_list_items(self):
-        Item.objects.create(text="itemy 1")
-        Item.objects.create(text="itemy 2")
-
-        request = HttpRequest()
-        response = home_page(request)
-
-        self.assertIn("itemy 1", response.content.decode())
-        self.assertIn("itemy 2", response.content.decode())

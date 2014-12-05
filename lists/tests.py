@@ -52,7 +52,6 @@ class HomePageTest(TestCase):
 
     def test_home_page_can_save_a_POST_request(self):
         request = self.list_item_post_request()
-        #response = home_page(request)
         home_page(request)
 
         self.assertEqual(Item.objects.count(), 1)
@@ -70,3 +69,13 @@ class HomePageTest(TestCase):
         req = HttpRequest()
         home_page(req)
         self.assertEqual(Item.objects.count(), 0)
+
+    def test_home_page_displays_all_list_items(self):
+        Item.objects.create(text="itemy 1")
+        Item.objects.create(text="itemy 2")
+
+        request = HttpRequest()
+        response = home_page(request)
+
+        self.assertIn("itemy 1", response.content.decode())
+        self.assertIn("itemy 2", response.content.decode())

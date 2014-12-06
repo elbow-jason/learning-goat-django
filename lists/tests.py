@@ -53,8 +53,9 @@ class ListViewTest(TestCase):
         self.assertIn('<html>', list_html)
 
     def test_displays_all_list_items(self):
-        Item.objects.create(text="itemy 1")
-        Item.objects.create(text="itemy 2")
+        list_ = List.objects.create()
+        Item.objects.create(text="itemy 1", list=list_)
+        Item.objects.create(text="itemy 2", list=list_)
 
         response = self.client.get(LISTS_URL)
 
@@ -81,6 +82,7 @@ class ListAndItemModelTest(TestCase):
 
         second_item = Item()
         second_item.text = text2
+        second_item.list = list_
         second_item.save()
 
         saved_items = Item.objects.all()

@@ -5,7 +5,7 @@ from django.template.loader import render_to_string
 
 # Create your tests here.
 from lists.views import home_page
-from lists.models import Item
+from lists.models import Item, List
 
 LISTS_URL = '/lists/the-only-list-in-the-world'
 
@@ -62,15 +62,22 @@ class ListViewTest(TestCase):
         self.assertContains(response, "itemy 2")
 
 
-class ItemModelTest(TestCase):
+class ListAndItemModelTest(TestCase):
 
     def test_saving_and_retrieving_items(self):
+        list_ = List()
+        list_.save()
+
         text1 = 'The first (ever) list item'
         text2 = 'Item the second'
 
         first_item = Item()
         first_item.text = text1
+        first_item.list = list_
         first_item.save()
+
+        saved_list = List.objects.first()
+        self.assertEqual(saved_list, list_)
 
         second_item = Item()
         second_item.text = text2
@@ -83,7 +90,10 @@ class ItemModelTest(TestCase):
         second_saved_item = saved_items[1]
 
         self.assertEqual(first_saved_item.text, text1)
+        self.assertEqual(first_saved_item.list, list_)
+
         self.assertEqual(second_saved_item.text, text2)
+        self.assertEqual(second_saved_item.list, list_)
 
 
 class HomePageTest(TestCase):

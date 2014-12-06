@@ -7,7 +7,7 @@ from django.template.loader import render_to_string
 from lists.views import home_page
 from lists.models import Item
 
-LISTS_URL = '/lists/the-only-list-in-the-world/'
+LISTS_URL = '/lists/the-only-list-in-the-world'
 
 
 class NewListTest(TestCase):
@@ -30,15 +30,14 @@ class NewListTest(TestCase):
             data={'item_text': 'A new list item'}
         )
 
-        self.assertEqual(response.status_code, 302)
-        self.assertEqual(response['location'], LISTS_URL)
-    """
-    def list_item_post_request(self):
-        request = HttpRequest()
-        request.method = 'POST'
-        request.POST['item_text'] = 'A new list item'
-        return request
-    """
+        self.assertRedirects(
+            response,
+            LISTS_URL,
+            target_status_code=200
+            #http://stackoverflow.com/questions/
+            #19318246/django-testing-redirections-when
+            #-the-target-url-is-also-a-redirection
+        )
 
 
 class ListViewTest(TestCase):
